@@ -17,5 +17,4 @@ Here are some ideas to get you started:
 
 ## blogs
 #### 2021
-
-## repositories
+- [做点无用的事](https://github.com/chenyyyang/chenyyyang/blob/main/%E5%81%9A%E7%82%B9%E6%97%A0%E7%94%A8%E7%9A%84%E4%BA%8B.md)

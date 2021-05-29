@@ -18,3 +18,4 @@ Here are some ideas to get you started:
 ## blogs
 #### 2021
 - [做点无用的事](https://github.com/chenyyyang/chenyyyang/blob/main/%E5%81%9A%E7%82%B9%E6%97%A0%E7%94%A8%E7%9A%84%E4%BA%8B.md)
+- [MySQL大表如何加字段(OnlineDDL)](https://github.com/chenyyyang/chenyyyang/blob/main/MySQL%E5%A4%A7%E8%A1%A8%E5%A6%82%E4%BD%95%E5%8A%A0%E5%AD%97%E6%AE%B5(OnlineDDL).md)

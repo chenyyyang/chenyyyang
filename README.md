@@ -7,7 +7,7 @@ Here are some ideas to get you started:
 -->
 
 - 😄 I am a software engineer.
-- 🤔 I've been coding for over 5 years.
+- 🤔 I started working for @Zoom full-time.
 - 📫 chuck199411@gmail.com.
 - 📱 wechat/qq:563571996
 - 🇨🇳 hefei

@@ -67,7 +67,7 @@ explain select count(*) from mytable.t2_not_null;
 1	SIMPLE	t2_not_null	NULL	index	NULL	t2_not_null_Column1_IDX	402	NULL	15929685	100.00	Using index
 ```
 
-
+## COUNT()函数
 版本 8.0 https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html  
 For transactional storage engines such as InnoDB, storing an exact row count is problematic. Multiple transactions may be occurring at the same time, each of which may affect the count.  
 InnoDB does not keep an internal count of rows in a table because concurrent transactions might “see” different numbers of rows at the same time. Consequently, SELECT COUNT(*) statements only count rows visible to the current transaction.

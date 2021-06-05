@@ -51,8 +51,8 @@ show profiles;
 ![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a606006b9e4c4e7680c31dfaa62d59dd~tplv-k3u1fbpfcp-watermark.image)
 
 ![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52b34b15b90449f5bb5a662e4b1a6b3a~tplv-k3u1fbpfcp-watermark.image)  
-### 总结是 select */count(*)的时候 两者的遍历耗时差不多，且default null还会稍微快一点  
-### select Column1 的时候，default ""有略微的优势。所以，DEFAULT NULL想用就用吧。
+- 总结是 select * 和 count(*)的时候 两者的遍历耗时差不多，且default null还会稍微快一点  
+- select Column1 的时候，default ""有略微的优势。所以，DEFAULT NULL想用就用吧。
 
 explain分析一下查询计划
 ```

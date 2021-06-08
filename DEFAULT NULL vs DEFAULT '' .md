@@ -19,7 +19,7 @@ CREATE TABLE `t2_not_null` (
 ```
 t1_null 和 t2_not_null 区别仅仅在于Column1，Column2是否 允许NULL。  
 
-##### what's better for disk space and performance ？
+## what's better for disk space and performance ？
 
 
 Mysql官方 [8.4.1 Optimizing Data Size](https://dev.mysql.com/doc/refman/5.7/en/data-size.html)
@@ -53,6 +53,7 @@ show profiles;
 ![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52b34b15b90449f5bb5a662e4b1a6b3a~tplv-k3u1fbpfcp-watermark.image)  
 - 总结是 select * 和 count(*)的时候 两者的遍历耗时差不多，且default null还会稍微快一点  
 - select Column1 的时候，default ""有略微的优势。所以，DEFAULT NULL想用就用吧。
+- 另一个角度讲，用default ""最大的优势就是,count(Column)时，可以选择这个列上的索引全索引扫描（否则就走主键索引），如果这一列size远小于主键的话，每次读取到buffer的列更多，减少磁盘IO次数，提高count()速度
 
 explain分析一下查询计划
 ```

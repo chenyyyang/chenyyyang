@@ -17,7 +17,9 @@ CREATE TABLE `t2_not_null` (
   KEY `t2_not_null_Column1_IDX` (`Column1`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 ```
-t1_null 和 t2_not_null 区别仅仅在于Column1，Column2是否 允许NULL。  
+t1_null 和 t2_not_null 区别仅仅在于Column1，Column2是否 允许NULL。 
+刚入职小米的时候，DBA就要求我们使用NOT NULL DEFAULT ''，而禁止使用DEFAULT NULL，那么实际DEFAULT ''真的好吗？  
+在磁盘空间和性能的角度上说。  
 
 ## what's better for disk space and performance ？
 
@@ -28,7 +30,7 @@ Mysql官方 [8.4.1 Optimizing Data Size](https://dev.mysql.com/doc/refman/5.7/en
 From 《High Performance MySQL, 3rd Edition》
 >Avoid NULL if possible. A lot of tables include nullable columns even when the application does not need to store NULL (the absence of a value), merely because it’s the default. It’s usually best to specify columns as NOT NULL unless you intend to store NULL in them. It’s harder for MySQL to optimize queries that refer to nullable columns, because they make indexes, index statistics, and value comparisons more complicated. A nullable column uses more storage space and requires special processing inside MySQL. When a nullable column is indexed, it requires an extra byte per entry and can even cause a fixed-size index (such as an index on a single integer column) to be converted to a variable-sized one in MyISAM. The performance improvement from changing NULL columns to NOT NULL is usually small, so don’t make it a priority to find and change them on an existing schema unless you know they are causing problems. However, if you’re planning to index columns, avoid making them nullable if possible. There are exceptions, of course. For example, it’s worth mentioning that InnoDB stores NULL with a single bit, so it can be pretty space-efficient for sparsely populated data. This doesn’t apply to MyISAM, though.
 
-翻译并简单来说就是，‘DEFAULT NULL’ 的字段会多使用1 bit的空间，查询时需要test each value是否为NULL
+翻译并简化语句，在InnoDB，‘DEFAULT NULL’ 的字段会多使用1 bit的空间，查询时需要test each value是否为NULL。
 
 >As with most "what's better for disk space and performance" questions: why don't you just insert a million rows with NULL, test some queries, and check for disk space? Repeat with ""s, and once more with a relatively even mix. And the answer is much more reliable than what some random guy on SO says
 
@@ -50,10 +52,12 @@ show profiles;
 
 ![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a606006b9e4c4e7680c31dfaa62d59dd~tplv-k3u1fbpfcp-watermark.image)
 
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52b34b15b90449f5bb5a662e4b1a6b3a~tplv-k3u1fbpfcp-watermark.image)  
-- 总结是 select * 和 count(*)的时候 两者的遍历耗时差不多，且default null还会稍微快一点  
-- select Column1 的时候，default ""有略微的优势。所以，DEFAULT NULL想用就用吧。
-- 另一个角度讲，用default ""最大的优势就是,count(Column)时，可以选择这个列上的索引全索引扫描（否则就走主键索引），如果这一列size远小于主键的话，每次读取到buffer的列更多，减少磁盘IO次数，提高count()速度
+![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/52b34b15b90449f5bb5a662e4b1a6b3a~tplv-k3u1fbpfcp-watermark.image)    
+总结是
+- 无论执行select * 还是select count(*) 两张表的执行遍历耗时差不多，且default null 的表还会稍微快一点  
+- select Column1 的时候，default ""有略微的优势。
+- 所以，DEFAULT NULL想用就用吧。
+- 用default ""最大的优势就是,count(Column)时，可以选择这个列上的索引全索引扫描（否则就走主键索引），如果这一列size远小于主键的话，每次读取到buffer的列更多，减少磁盘IO次数，提高count()速度
 
 explain分析一下查询计划
 ```
@@ -80,14 +84,16 @@ InnoDB handles SELECT COUNT(*) and SELECT COUNT(1) operations in the same way. T
 版本 5.7 中额外还说明了  
 Prior to MySQL 5.7.18, InnoDB processes SELECT COUNT(*) statements by scanning the clustered index. As of MySQL 5.7.18, InnoDB processes SELECT COUNT(*) statements by traversing the smallest available secondary index unless an index or optimizer hint directs the optimizer to use a different index. If a secondary index is not present, the clustered index is scanned.
 
-#### 按照官方的说法，从5.7.18版本开始，SELECT COUNT(*)，会自动选择smallest 二级索引，也可以指定一个其他索引，如果没有二级索引，则会使用主键索引。如果可以接受模糊的count，可以使用SHOW TABLE STATUS来获取大致的rows数量。
+#### 按照官方的说法，从5.7.18版本开始，SELECT COUNT(*)，会自动选择smallest 二级索引，也可以指定一个其他索引，如果没有二级索引，则会使用主键索引。如果可以接受模糊的count，可以使用SHOW TABLE STATUS来获取大致的rows数量，我们可以按照这个思路来优化大表的count...
 
-解释了explain的结果为啥都是用的二级索引。  
-但是为啥同样的数据行，每行数据内容也相同，count(*)理论上应该是t2_not_null_Column1_IDX 遍历效率会大于 t1_null_Column1_IDX（因为索引占用磁盘空间更小，便遍历过程中不再需要test is null）
+解释了上面explain的结果为啥都是用的二级索引。  
+同样的数据行数，每行内容也相同，执行count(*)理论上应该是t2_not_null_Column1_IDX 遍历效率会大于 t1_null_Column1_IDX（因为索引占用磁盘空间更小，便遍历过程中不再需要test is null），但是实际却是相反的，这一点还有点费解
+
 ```
+如果强制走允许null的索引，会导致额外的回表操作，影响性能
 select count(Column1) from mytable.t1_null force index(t1_null_Column1_IDX); 
 16804155 18.2s
-select count(Column1) from mytable.t1_null force index(t1_null_Column1_IDX); 
+select count(Column1) from mytable.t2_not_null force index(t2_not_null_Column1_IDX); 
 16820977  9.63s
 ```
 

@@ -66,6 +66,14 @@ ADD INDEX APP_NAME_IDX(app_name) USING BTREE ;
 观察DML的执行均未收到影响，DDL语句执行耗时150s。  
 查日志也没有发现 MySQLTransactionRollbackException，一切正常。
 
+如果是用代码执行DDL，可能遇到
+```
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+The last packet successfully received from the server was{xxx} milliseconds ago. 
+The last packet sent successfully to the server was {xxx} milliseconds ago.
+```
+连接超时，socketTimeout参数设置大一些即可
+
 ### 总结
 在MySQL 5.7版本 大表增加字段和索引的操作中不会阻塞DML语句（也有可能是阻塞非常短的时间），使用MySQL内置的功能即可，无需使用其他工具。  
 但是要注意的是，避免长事务或者加上wait关键词,多条alter语句可以用逗号拼接。

@@ -7,8 +7,6 @@ Here are some ideas to get you started:
 -->
 
 - 😄 I am a software engineer.
-- 🤔 I started working for @Zoom full-time since 2021.
-- 📫 chuck199411@gmail.com.
 - 📱 wechat/qq:563571996
 - 🇨🇳 hefei
   

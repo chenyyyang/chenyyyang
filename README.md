@@ -17,7 +17,7 @@ Here are some ideas to get you started:
 #### 2021
 - [Spark Structured Streaming 集成 Kafka 源码解析-Source篇](https://github.com/chenyyyang/chenyyyang/blob/main/StructuredStreamingSource.md)
 - [kafkaProducer.flush引发的死锁阻塞问题](https://github.com/chenyyyang/chenyyyang/blob/main/KafkaProducer1.md)
-- [从零开始学流计算-Structured Streaming + Kafka Integration](https://github.com/chenyyyang/chenyyyang/blob/main/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%B5%81%E8%AE%A1%E7%AE%971.md)
+- [Spark Structured Streaming 集成 Kafka - Sample](https://github.com/chenyyyang/chenyyyang/blob/main/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%B5%81%E8%AE%A1%E7%AE%971.md)
 - [DEFAULT NULL vs DEFAULT '' 以及 count(*)优化](https://github.com/chenyyyang/chenyyyang/blob/main/DEFAULT%20NULL%20vs%20DEFAULT%20''%20.md)
 - [做点无用的事](https://github.com/chenyyyang/chenyyyang/blob/main/%E5%81%9A%E7%82%B9%E6%97%A0%E7%94%A8%E7%9A%84%E4%BA%8B.md)
 - [MySQL大表如何加字段(OnlineDDL)](https://github.com/chenyyyang/chenyyyang/blob/main/MySQL%E5%A4%A7%E8%A1%A8%E5%A6%82%E4%BD%95%E5%8A%A0%E5%AD%97%E6%AE%B5(OnlineDDL).md)

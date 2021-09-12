@@ -15,6 +15,7 @@ Here are some ideas to get you started:
 
 ## blogs
 #### 2021
+- [Spark Structured Streaming 集成 Kafka 源码解析-Source篇](https://github.com/chenyyyang/chenyyyang/blob/main/StructuredStreamingSource.md)
 - [kafkaProducer.flush引发的死锁阻塞问题](https://github.com/chenyyyang/chenyyyang/blob/main/KafkaProducer1.md)
 - [从零开始学流计算-Structured Streaming + Kafka Integration](https://github.com/chenyyyang/chenyyyang/blob/main/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AD%A6%E6%B5%81%E8%AE%A1%E7%AE%971.md)
 - [DEFAULT NULL vs DEFAULT '' 以及 count(*)优化](https://github.com/chenyyyang/chenyyyang/blob/main/DEFAULT%20NULL%20vs%20DEFAULT%20''%20.md)

@@ -248,7 +248,7 @@ private[kafka010] class KafkaMicroBatchStream(
 // 初始化offset信息，从指定的offset开始读取数据，还是从earliest offset开始读取
 // 看用户输入的参数。
 // 1.当checkpoint 已经存在，说明Job重启了，应该从上一次的计算状态恢复
-// Spark会自动从 checkpoint中读取未提交的offset,通过保障数据不丢deserializeOffset方法 
+// Spark会自动从 checkpoint中读取未提交的offset,保障数据不丢，deserializeOffset方法 
 //反序列化成KafkaSourceOffset对象，继续处理 
   override def initialOffset(): Offset = {
     val metadataLog =

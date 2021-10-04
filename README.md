@@ -5,10 +5,8 @@
 
 Here are some ideas to get you started:
 -->
-
-- 😄 I am a software engineer.
 - 📱 wechat/qq:563571996
-- 🇨🇳 
+- 🇨🇳 UTC+8
   
     
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=chenyyyang&count_private=true&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)

@@ -10,4 +10,4 @@ Here are some ideas to get you started:
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=chenyyyang&count_private=true&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)
 
 ## blogs
-- [2021archive 存档](https://github.com/chenyyyang/chenyyyang/blob/main/blog2021.md)
+- [2021 documents archive](https://github.com/chenyyyang/chenyyyang/blob/main/blog2021.md)
